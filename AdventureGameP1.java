@@ -51,7 +51,7 @@ public class AdventureGameP1{
          boolean survived = true;
          
          if (branchChoice.equals("A")) {
-         survived = theShortcutB1(in, inventory);
+            survived = theShortcutB1(in, inventory);
          }
          else if (branchChoice.equals("B")) {
             survived = deepForestB2(in, inventory);
@@ -101,15 +101,16 @@ public class AdventureGameP1{
                                 userGear[1].equals(userGear[2]) || 
                                 userGear[0].equals(userGear[2]);
 
+         if(!validNumbers){
+             System.out.print("Invalid! Only numbers 1-6 allowed: ");
+             continue;
+         }
+         
          if (hasDuplicate) {
             System.out.print("No duplicates allowed! Pick 3 unique items: ");
             continue; // Restarts the loop so they have to try again
          }
          
-         if(!validNumbers){
-             System.out.print("Invalid! Only numbers 1-6 allowed: ");
-             continue;
-         }
          // reason we add "" because thats 0 and user isnt going to input 0
          // for canteen he inputs 1 for canteen 
          String[] gearNames = {" ", "Old Canteen", "Dry Matches", "Rusty Machete",
@@ -187,7 +188,7 @@ public class AdventureGameP1{
          String choice1B1 = getValidInput(in, new String[] {"A", "B", "C"});
          if(choice1B1.equals("B")) {
             System.out.println("\nYou try to hold on to the rope, but the bridge keeps failing."
-                              + "\nYou start swing violently until all the supports fail." 
+                              + "\nYou start swinging violently until all the supports fail." 
                               +"\nYou fall down the canyon to your demise.");
             in.nextLine();                   
             System.out.println("\nDeath by 'The Long Drop'."); 
@@ -238,7 +239,7 @@ public class AdventureGameP1{
          if (choice2B1.equals("B")) {
             System.out.println();
             printInventory(inventory);
-            System.out.print("\nWhich item would like you to swap out? (1/2/3): ");
+            System.out.print("\nWhich item would you like to swap out? (1/2/3): ");
             String swapChoice = getValidInput(in, new String[]{"1","2","3"});
             switch (swapChoice) {
                case "1": inventory[0] = "Silver Compass"; break;
@@ -269,7 +270,7 @@ public class AdventureGameP1{
                           + "\nYou decide to try to cross, but end up going"
                           + "\nnowhere. You end up lost forever");
          in.nextLine();
-         System.out.print("\n\nDeath by 'Forever Lost'.\n"); ;
+         System.out.print("\n\nDeath by 'Forever Lost'.\n");
          return false;    
       }
       System.out.print("\nYou lucked out, you have a compass in your inventory!"
@@ -665,7 +666,7 @@ public class AdventureGameP1{
       if (forkChoice.equals("A")) {
          System.out.print("\n\nYou paddle hard toward the waterfall. The drop"
                           + "\nis massive. You plummet down, your foot gets crushed \nby a rock"
-                          + " at the bottom. Your leg is bleeding baddly.\n");
+                          + " at the bottom. Your leg is bleeding badly.\n");
          in.nextLine();
          if (!checkInventory(inventory, "First Aid Kit")) {
             System.out.print("\nYou have nothing to treat the wound. You can't"
@@ -683,14 +684,15 @@ public class AdventureGameP1{
             System.out.print("\n\nYou take the slow route. The water is still but"
                           + "\nthe sun is brutal. Hours pass. You are desperately"
                           + "\nthirsty.\n");
-         in.nextLine();
+            in.nextLine();
          if (!checkInventory(inventory, "Old Canteen")) {
             System.out.print("\nYou have nothing to drink from. The heat wins."
-                            + "\nYou collapse in the canoe, unconscious.");
+                             + "\nYou collapse in the canoe, unconscious.");
             in.nextLine();
             System.out.print("\n\nDeath by 'Heat Stroke'.\n");
             return false;
          }
+         
          System.out.print("\nYou take a long drink from your canteen and push through."
                           + "\nYou make it out of the slough.\n");
          in.nextLine();
@@ -723,7 +725,7 @@ public class AdventureGameP1{
       System.out.print("\nYou burst through and drag the canoe onto dry land."
                        + "\nExhausted, soaked, but alive.\n");
       in.nextLine();
-      System.out.print("\nVictory by 'Grand Rescue'.\n");
+      System.out.print("\nVictory by 'The Long Way Out'.\n");
       System.out.print("Your ending inventory: \n\n");
       printInventory(inventory);
       System.out.println();
