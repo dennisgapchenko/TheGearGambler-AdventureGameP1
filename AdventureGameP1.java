@@ -12,9 +12,8 @@ import java.util.Scanner;
 public class AdventureGameP1{
    public static void main(String[] args){
       Scanner in = new Scanner(System.in);
-      System.out.print("-------------------- The Gear Gambler ----------");
-      System.out.print("----------");
-      
+      printDivider();
+      System.out.print("                     The Gear Gambler ");
       System.out.print("\n\nWelcome, this is an adventure game where you ");
       System.out.print("\nchoose 3 pieces of gear at the start.");
       System.out.print(" You then \nenter one of three play-throughs where your ");
@@ -22,6 +21,8 @@ public class AdventureGameP1{
       System.out.print("\nHave fun and choose wisely!");
       System.out.print("\n\nPS: Press ENTER/RETURN to advance in the story.");
       in.nextLine();
+      printDivider(); 
+      
       
       boolean playing = true;
       while (playing){
@@ -97,8 +98,8 @@ public class AdventureGameP1{
                                 
          // makes sure for all cases making sure we don't have a duplicate
          boolean hasDuplicate = userGear[0].equals(userGear[1]) || 
-                       userGear[1].equals(userGear[2]) || 
-                       userGear[0].equals(userGear[2]);
+                                userGear[1].equals(userGear[2]) || 
+                                userGear[0].equals(userGear[2]);
 
          if (hasDuplicate) {
             System.out.print("No duplicates allowed! Pick 3 unique items: ");
@@ -276,6 +277,9 @@ public class AdventureGameP1{
                        + "are\ngoing, the compass helps you make your way out.\n");
       in.nextLine();
       System.out.print("\nVictory by 'Master Navigator'.\n");
+      System.out.print("Your ending inventory: \n\n");
+      printInventory(inventory);
+      System.out.println();
       return true;
    }
    
@@ -497,15 +501,234 @@ public class AdventureGameP1{
                           + "\nThey wave you through without a word.\n");
          in.nextLine();
          System.out.print("\nVictory by 'Forest Survivor'.\n");
+         System.out.print("Your ending inventory: \n\n");
+         printInventory(inventory);
+         System.out.println();
          return true;
    }
    
    
-   // The "River Rapids" (Requirement Fork)
+   // The "River Rapids"
    public static boolean riverRapidsB3(Scanner in, String[] inventory) {
+      nextScene(in, "                     The River Rapids\n");
+   
+      // prompt 1: riverbed and canoe
+      System.out.print("\nYou are walking near a riverbed when you spot"
+                       + "\nan old canoe resting on the sand. Nearby sits"
+                       + "\na washed-up crate. You pry it open and find"
+                       + "\na First Aid Kit and a Rusty Paddle.\n");
+      in.nextLine();
+   
+      // prompt 2: crate items - swap or leave
+      System.out.print("\nWhat shall you do?\n");
+      System.out.print("\nA) Swap out an item for the First Aid Kit.");
+      System.out.print("\nB) Swap out an item for the Rusty Paddle.");
+      System.out.print("\nC) Swap out 2 items for both.");
+      System.out.print("\nD) Leave the items alone.");
+      System.out.print("\nE) Check inventory.");
+      System.out.print("\n\nChoose an option: ");
+   
+      while (true) {
+         String choice1B3 = getValidInput(in, new String[]{"A", "B", "C", "D", "E"});
+         switch (choice1B3) {
+            case "A":
+               System.out.println();
+               System.out.println("1) " + inventory[0]);
+               System.out.println("2) " + inventory[1]);
+               System.out.println("3) " + inventory[2]);
+               System.out.print("\nWhich item to swap out? (1/2/3): ");
+               String swapA = getValidInput(in, new String[]{"1","2","3"});
+               switch (swapA) {
+                  case "1": inventory[0] = "First Aid Kit"; break;
+                  case "2": inventory[1] = "First Aid Kit"; break;
+                  case "3": inventory[2] = "First Aid Kit"; break;
+               }
+            break;
+         
+            case "B":
+               System.out.println();
+               System.out.println("1) " + inventory[0]);
+               System.out.println("2) " + inventory[1]);
+               System.out.println("3) " + inventory[2]);
+               System.out.print("\nWhich item to swap out? (1/2/3): ");
+               String swapB = getValidInput(in, new String[]{"1","2","3"});
+               switch (swapB) {
+                  case "1": inventory[0] = "Rusty Paddle"; break;
+                  case "2": inventory[1] = "Rusty Paddle"; break;
+                  case "3": inventory[2] = "Rusty Paddle"; break;
+               }
+            break;
+         
+            case "C":
+               System.out.println();
+               System.out.println("1) " + inventory[0]);
+               System.out.println("2) " + inventory[1]);
+               System.out.println("3) " + inventory[2]);
+               System.out.print("\nWhich item to swap for First Aid Kit? (1/2/3): ");
+               String swapC1 = getValidInput(in, new String[]{"1","2","3"});
+               System.out.println();
+               switch (swapC1) {
+                  case "1": inventory[0] = "First Aid Kit"; break;
+                  case "2": inventory[1] = "First Aid Kit"; break;
+                  case "3": inventory[2] = "First Aid Kit"; break;
+               }
+               String[] remaining;
+               if (swapC1.equals("1")) remaining = new String[]{"2","3"};
+               else if (swapC1.equals("2")) remaining = new String[]{"1","3"};
+               else remaining = new String[]{"1","2"};
+               
+               System.out.println("1) " + inventory[0]);
+               System.out.println("2) " + inventory[1]);
+               System.out.println("3) " + inventory[2]);
+               System.out.print("\nWhich item to swap for Rusty Paddle? ("
+                             + remaining[0] + "/" + remaining[1] + "): ");
+               String swapC2 = getValidInput(in, remaining);
+               System.out.println();
+               switch (swapC2) {
+                  case "1": inventory[0] = "Rusty Paddle"; break;
+                  case "2": inventory[1] = "Rusty Paddle"; break;
+                  case "3": inventory[2] = "Rusty Paddle"; break;
+               }
+            break;
+         
+            case "D":
+               break;
+            case "E":
+               System.out.print("Your inventory: \n\n");
+               printInventory(inventory);
+               System.out.print("\nChoose an option: ");
+               continue;
+         }  
+         break;
+      }
+   
+      // prompt 3: canoe or hike
+      System.out.print("\n\nThe canoe is ready. What do you do?\n");
+      System.out.print("\nA) Take the canoe down the river.");
+      System.out.print("\nB) Leave the canoe and hike instead.");
+      System.out.print("\nC) Check inventory.\n");
+      System.out.print("\nChoose an option: ");
+   
+      while (true) {
+         String travelChoice = getValidInput(in, new String[]{"A", "B", "C"});
+         if (travelChoice.equals("B")) {
+            System.out.print("\n\nYou follow the trail alongside the river. The view"
+                             + "\nis breathtaking. You reach a cliff overlooking a"
+                             + "\nmassive waterfall and lean forward to admire it.");
+            in.nextLine();
+            System.out.print("\nThe soft ground gives way beneath your boots."
+                             + "\nYou tumble off the cliff into the churning pool below."
+                             + "\nWithout a boat the currents pull you under.");
+            in.nextLine();
+            System.out.print("\n\nDeath by 'Drowned by Beauty'.\n");
+            return false;
+         }
+         else if (travelChoice.equals("C")) {
+            System.out.print("\nYour inventory:\n\n");
+            printInventory(inventory);
+            System.out.print("\nChoose an option: ");
+            continue;
+         } 
+         else { break; }
+      }
+      if (!checkInventory(inventory, "Rusty Paddle")) {
+         System.out.print("\n\nYou push off but quickly realize you have nothing"
+                          + "\nto steer with. The current takes you wherever it"
+                          + "\nwants. You slam into a rock and go under.\n");
+         in.nextLine();
+         System.out.print("\nDeath by 'Up the Creek'.\n");
+         return false;
+      }
+      // prompt 4: the river fork
+      System.out.print("\n\nYou push off and paddle down the river. The current"
+                       + "\npicks up and you reach a fork. Two paths ahead.\n");
+      in.nextLine();
+      System.out.print("\nA) The Waterfall - fast but dangerous.");
+      System.out.print("\nB) The Slough - slow but calmer.");
+      System.out.print("\nC) Check inventory.\n");
+      System.out.print("\nChoose an option: ");
+      
+      String forkChoice = "";
+      while (true) {
+         forkChoice = getValidInput(in, new String[]{"A", "B", "C"});
+         
+         if (forkChoice.equals("C")) {
+            System.out.print("\nYour inventory:\n\n");
+            printInventory(inventory);
+            System.out.print("\nChoose an option: ");
+            continue;
+         }
+         else { break; }
+      }
+   
+      // prompt 5: waterfall or slough outcome
+      if (forkChoice.equals("A")) {
+         System.out.print("\n\nYou paddle hard toward the waterfall. The drop"
+                          + "\nis massive. You plummet down, your foot gets crushed \nby a rock"
+                          + " at the bottom. Your leg is bleeding baddly.\n");
+         in.nextLine();
+         if (!checkInventory(inventory, "First Aid Kit")) {
+            System.out.print("\nYou have nothing to treat the wound. You can't"
+                             + "\nstop the bleeding. Eventually you bleed out.");
+            in.nextLine();
+            System.out.print("\n\nDeath by 'River Side Bleed'.\n");
+            return false;
+         }
+         System.out.print("\nYou pull out your First Aid Kit and patch yourself up."
+                          + "\nIt hurts but you can keep going.\n");
+         removeItem(inventory, "First Aid Kit");
+         in.nextLine();
+         }
+         else {
+            System.out.print("\n\nYou take the slow route. The water is still but"
+                          + "\nthe sun is brutal. Hours pass. You are desperately"
+                          + "\nthirsty.\n");
+         in.nextLine();
+         if (!checkInventory(inventory, "Old Canteen")) {
+            System.out.print("\nYou have nothing to drink from. The heat wins."
+                            + "\nYou collapse in the canoe, unconscious.");
+            in.nextLine();
+            System.out.print("\n\nDeath by 'Heat Stroke'.\n");
+            return false;
+         }
+         System.out.print("\nYou take a long drink from your canteen and push through."
+                          + "\nYou make it out of the slough.\n");
+         in.nextLine();
+      }
+   
+      // prompt 6: bear blocks the landing
+      System.out.print("\nYou round the final bend and spot the riverbank landing."
+                       + "\nFreedom is right there. But a massive bear steps out"
+                       + "\nand blocks your path, growling.\n");
+      in.nextLine();
+   
+      if (!checkInventory(inventory, "Bear Bell")) {
+         System.out.print("\nYou have nothing to deter the bear. It charges."
+                          + "\nYou never make it to the bank.");
+         in.nextLine();
+         System.out.print("\n\nDeath by 'Bear Food'.\n");
+         return false;
+      }
+   
+      System.out.print("\nYou violently shake the Bear Bell. The loud clanging"
+                       + "\nstartles the bear and it retreats into the trees."
+                       + "\nThe Bear Bell breaks in the process.\n");
+      removeItem(inventory, "Bear Bell");
+      in.nextLine();
+   
+      // prompt 7: final current
+      System.out.print("\nOne last violent current stands between you and the bank."
+                       + "\nYou dig in and paddle with everything you have.\n");
+      in.nextLine();
+      System.out.print("\nYou burst through and drag the canoe onto dry land."
+                       + "\nExhausted, soaked, but alive.\n");
+      in.nextLine();
+      System.out.print("\nVictory by 'Grand Rescue'.\n");
+      System.out.print("Your ending inventory: \n\n");
+      printInventory(inventory);
+      System.out.println();
       return true;
    }
-   
    
    
    
@@ -552,6 +775,5 @@ public class AdventureGameP1{
             return;
          }
       }
-   }
-   
+   } 
 }
